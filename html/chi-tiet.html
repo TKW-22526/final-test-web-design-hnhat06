@@ -1,0 +1,59 @@
+
+<!doctype html>
+<html lang="vi">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Chi tiết sản phẩm — Đồ Dùng Nhà Tôi</title>
+	<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+	<header class="site-header">
+		<div class="container header-inner">
+			<a class="logo" href="../index.html">Đồ Dùng Nhà Tôi</a>
+			<nav class="main-nav">
+				<a href="../index.html">Trang chủ</a>
+				<a href="san-pham.html">Sản phẩm</a>
+				<a href="gioi-thieu.html">Giới thiệu</a>
+				<a href="lien-he.html">Liên hệ</a>
+			</nav>
+			<div class="cart" id="cart">Giỏ hàng: <span id="cart-count">0</span></div>
+		</div>
+	</header>
+
+	<main class="container">
+		<section style="padding:24px 0;">
+			<div class="product-detail">
+				<img id="pd-img" src="https://via.placeholder.com/640x440?text=Sản+phẩm" alt="" style="width:100%;max-width:640px;border-radius:8px;">
+				<h2 id="pd-title">Tên sản phẩm</h2>
+				<p id="pd-price" class="price">0₫</p>
+				<p id="pd-desc">Mô tả sản phẩm.</p>
+				<div class="product-actions">
+					<button id="pd-add" class="btn">Thêm vào giỏ</button>
+					<button id="pd-buy" class="btn-secondary" type="button">Mua ngay</button>
+				</div>
+				<p id="buy-message" style="color:#0f766e;display:none;margin-top:8px;font-weight:600"></p>
+			</div>
+		</section>
+	</main>
+
+	<footer class="site-footer">
+		<div class="container">
+			<p>&copy; 2026 Đồ Dùng Nhà Tôi</p>
+		</div>
+	</footer>
+
+	<script src="../js/script.js"></script>
+	<script>
+		// Read id from query and render product
+		(function(){
+			const params = new URLSearchParams(location.search);
+			const id = params.get('id');
+			if(id){
+				// Wait until products loaded (script.js defines them synchronously)
+				renderProductDetail(id);
+			}
+		})();
+	</script>
+</body>
+</html>

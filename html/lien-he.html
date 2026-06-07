@@ -1,0 +1,77 @@
+
+<!doctype html>
+<html lang="vi">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Liên hệ — Đồ Dùng Nhà Tôi</title>
+	<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+	<header class="site-header">
+		<div class="container header-inner">
+			<a class="logo" href="../index.html">Đồ Dùng Trong Nhà</a>
+			<nav class="main-nav">
+				<a href="../index.html">Trang chủ</a>
+				<a href="san-pham.html">Sản phẩm</a>
+				<a href="gioi-thieu.html">Giới thiệu</a>
+				<a href="lien-he.html">Liên hệ</a>
+			</nav>
+			<div class="cart" id="cart">Giỏ hàng: <span id="cart-count">0</span></div>
+		</div>
+	</header>
+
+	<main class="container">
+		<section style="padding:24px 0;max-width:800px;">
+			<h2>Liên hệ</h2>
+			<p>Nếu bạn có câu hỏi về sản phẩm hoặc cần hỗ trợ, xin vui lòng liên hệ với chúng tôi qua thông tin dưới đây hoặc gửi cho chúng tôi lời nhắn.</p>
+			<div style="display:grid;gap:18px;margin-bottom:24px;">
+				<div style="background:#fff;padding:18px;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+					<strong>Hotline:</strong>
+					<p>0367700970</p>
+				</div>
+				<div style="background:#fff;padding:18px;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+					<strong>Email:</strong>
+					<p>nhatmanh002@gmail.com</p>
+				</div>
+			</div>
+			<p id="contact-product" style="font-weight:600;display:none;margin-bottom:16px"></p>
+		<form id="contact-form" action="#" method="post" style="background:#fff;padding:24px;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+				<label for="contact-name">Họ và tên</label>
+				<input id="contact-name" type="text" name="name" required style="width:100%;padding:10px;margin:8px 0 16px;border-radius:6px;border:1px solid #ddd">
+				<label for="contact-email">Email</label>
+				<input id="contact-email" type="email" name="email" required style="width:100%;padding:10px;margin:8px 0 16px;border-radius:6px;border:1px solid #ddd">
+				<label for="contact-message">Nội dung</label>
+				<textarea id="contact-message" name="message" rows="6" required style="width:100%;padding:10px;margin:8px 0 16px;border-radius:6px;border:1px solid #ddd"></textarea>
+				<button class="btn" type="submit">Gửi</button>
+			</form>
+			<p id="contact-result" style="margin-top:16px;color:green;display:none">Cảm ơn! Chúng tôi đã nhận tin nhắn và sẽ phản hồi sớm.</p>
+		</section>
+	</main>
+
+	<footer class="site-footer">
+		<div class="container">
+			<p>&copy; 2026 Đồ Dùng Trong Nhà</p>
+		</div>
+	</footer>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function(){
+			const params = new URLSearchParams(location.search);
+			const productName = params.get('product');
+			const contactProduct = document.getElementById('contact-product');
+			if(productName && contactProduct){
+				contactProduct.textContent = `Bạn đang đặt mua: ${productName}`;
+				contactProduct.style.display = 'block';
+			}
+			const form = document.getElementById('contact-form');
+			if(!form) return;
+			form.addEventListener('submit', function(e){
+				e.preventDefault();
+				document.getElementById('contact-result').style.display = 'block';
+				form.reset();
+			});
+		});
+	</script>
+</body>
+</html>

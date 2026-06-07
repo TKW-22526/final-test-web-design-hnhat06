@@ -1,0 +1,61 @@
+
+<!doctype html>
+<html lang="vi">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Sản phẩm — Đồ Dùng Nhà Tôi</title>
+	<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+	<header class="site-header">
+		<div class="container header-inner">
+			<a class="logo" href="../index.html">Đồ Dùng Nhà Tôi</a>
+			<nav class="main-nav">
+				<a href="../index.html">Trang chủ</a>
+				<a href="san-pham.html">Sản phẩm</a>
+				<a href="gioi-thieu.html">Giới thiệu</a>
+				<a href="lien-he.html">Liên hệ</a>
+			</nav>
+			<div class="cart" id="cart">Giỏ hàng: <span id="cart-count">0</span></div>
+		</div>
+	</header>
+
+	<main>
+		<section class="products container">
+			<h2>Danh mục sản phẩm</h2>
+			<div class="grid" id="product-grid">
+				<!-- Grid populated by JS -->
+			</div>
+		</section>
+	</main>
+
+	<footer class="site-footer">
+		<div class="container">
+			<p>&copy; 2026 Đồ Dùng Nhà Tôi</p>
+		</div>
+	</footer>
+
+	<script src="../js/script.js"></script>
+	<script>
+		// render product grid from shared data
+		(function(){
+			const grid = document.getElementById('product-grid');
+			if(!grid || !window.products) return;
+			window.products.forEach(p=>{
+				const card = document.createElement('article');
+				card.className = 'card';
+				card.innerHTML = `
+					<a href="chi-tiet.html?id=${p.id}"><img src="${productUrl(p.imgFile)}" alt="${p.title}"></a>
+					<h3><a href="chi-tiet.html?id=${p.id}">${p.title}</a></h3>
+					<p class="price">${p.price}</p>
+					<button class="btn add-to-cart">Thêm vào giỏ</button>
+				`;
+				grid.appendChild(card);
+			});
+			// bind buttons after insertion
+			bindAddToCartButtons(document);
+		})();
+	</script>
+</body>
+</html>
