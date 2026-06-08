@@ -15,6 +15,7 @@
 				<a href="html/san-pham.html">Sản phẩm</a>
 				<a href="html/gioi-thieu.html">Giới thiệu</a>
 				<a href="html/lien-he.html">Liên hệ</a>
+				<a href="html/gio-hang.html">Giỏ hàng</a>
 			</nav>
 			<div class="cart" id="cart">Giỏ hàng: <span id="cart-count">0</span></div>
 		</div>
@@ -54,7 +55,7 @@
 					<a href="html/chi-tiet.html?id=${p.id}"><img src="${productUrl(p.imgFile)}" alt="${p.title}"></a>
 					<h3><a href="html/chi-tiet.html?id=${p.id}">${p.title}</a></h3>
 					<p class="price">${p.price}</p>
-					<button class="btn add-to-cart">Thêm vào giỏ</button>
+					<button class="btn add-to-cart" data-id="${p.id}">Thêm vào giỏ</button>
 				`;
 				grid.appendChild(card);
 			});

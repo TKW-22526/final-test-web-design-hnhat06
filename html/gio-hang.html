@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="vi">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Giỏ hàng — Đồ Dùng Nhà Tôi</title>
+	<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+	<header class="site-header">
+		<div class="container header-inner">
+			<a class="logo" href="../index.html">Đồ Dùng Nhà Tôi</a>
+			<nav class="main-nav">
+				<a href="../index.html">Trang chủ</a>
+				<a href="san-pham.html">Sản phẩm</a>
+				<a href="gioi-thieu.html">Giới thiệu</a>
+				<a href="lien-he.html">Liên hệ</a>
+				<a href="gio-hang.html">Giỏ hàng</a>
+			</nav>
+			<div class="cart" id="cart">Giỏ hàng: <span id="cart-count">0</span></div>
+		</div>
+	</header>
+
+	<main class="container">
+		<section style="padding:24px 0;">
+			<h2>Giỏ hàng của bạn</h2>
+			<div id="cart-area">
+				<p>Đang tải giỏ hàng...</p>
+			</div>
+		</section>
+	</main>
+
+	<footer class="site-footer">
+		<div class="container">
+			<p>&copy; 2026 Đồ Dùng Nhà Tôi</p>
+		</div>
+	</footer>
+
+	<script src="../js/script.js"></script>
+	<script>
+		function renderCart(){
+			const area = document.getElementById('cart-area');
+			const items = Cart.items();
+			if(!items || items.length===0){
+				area.innerHTML = '<p>Giỏ hàng trống. <a href="san-pham.html">Tiếp tục mua sắm</a>.</p>';
+				return;
+			}
+			let html = '<div style="display:flex;flex-direction:column;gap:12px">';
+			items.forEach(it=>{
+				const p = window.products.find(x=>x.id===it.id) || {title: it.id, price: ''};
+				html += `
+					<div style="background:#fff;padding:12px;border-radius:8px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+						<div>
+							<strong>${p.title}</strong>
+							<p style="margin:6px 0;color:#666">Số lượng: ${it.qty}</p>
+							<p style="margin:6px 0;color:#111">Giá: ${p.price}</p>
+						</div>
+						<div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end;">
+							<button class="btn buy-now" data-id="${it.id}">Mua</button>
+							<button class="btn remove-from-cart" data-id="${it.id}">Xóa</button>
+						</div>
+					</div>
+				`;
+			});
+			html += '<div style="margin-top:12px;display:flex;gap:12px;align-items:center">'
+			html += '<button id="checkout-all" class="btn">Thanh toán</button>';
+			html += '<button id="clear-cart" class="btn">Xóa toàn bộ</button></div>';
+			html += '<p id="cart-message" style="color:green;display:none;margin-top:12px"></p>';
+			html += '</div>';
+			area.innerHTML = html;
+			// bind remove buttons
+			area.querySelectorAll('.remove-from-cart').forEach(b=>{
+				b.addEventListener('click', function(){
+					const id = b.dataset.id; Cart.remove(id); renderCart();
+				});
+			});
+			// bind buy buttons
+			area.querySelectorAll('.buy-now').forEach(b=>{
+				b.addEventListener('click', function(){
+					const id = b.dataset.id;
+					const res = Cart.checkout(id);
+					const prod = window.products.find(x=>x.id===id);
+					const msg = document.getElementById('cart-message');
+					if(msg){
+						msg.textContent = res ? `Cảm ơn! Đã mua ${prod ? prod.title : id}.` : 'Lỗi mua hàng.';
+						msg.style.display = 'block';
+						setTimeout(()=>msg.style.display='none',4000);
+					}
+					renderCart();
+				});
+			});
+
+			// bind checkout all
+			const checkoutAll = document.getElementById('checkout-all');
+			if(checkoutAll){
+				checkoutAll.addEventListener('click', function(){
+					const all = Cart.checkout();
+					const msg = document.getElementById('cart-message');
+					if(msg){ msg.textContent = 'Cảm ơn! Đơn hàng của bạn đã được ghi nhận.'; msg.style.display='block'; setTimeout(()=>msg.style.display='none',4000); }
+					renderCart();
+				});
+			}
+			const clear = document.getElementById('clear-cart');
+			if(clear) clear.addEventListener('click', function(){ Cart.clear(); renderCart(); });
+		}
+		document.addEventListener('DOMContentLoaded', function(){ renderCart(); });
+	</script>
+</body>
+</html>
