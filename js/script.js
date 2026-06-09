@@ -63,8 +63,8 @@ const Cart = (function(){
 })();
 
 function getAssetPath(fileName){
-	// If page is inside /html/ folder, images are one level up
-	const prefix = location.pathname.includes('/html/') || location.pathname.includes('\\html\\') ? '../assets/thesis/' : 'assets/thesis/';
+	// Images are stored directly in /assets; pages under /html/ need one level up
+	const prefix = location.pathname.includes('/html/') || location.pathname.includes('\\html\\') ? '../assets/' : 'assets/';
 	return prefix + fileName;
 }
 
