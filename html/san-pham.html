@@ -25,9 +25,14 @@
 	<main>
 		<section class="products container">
 			<h2>Danh mục sản phẩm</h2>
+			<div class="search-bar">
+				<label class="search-label" for="product-search">Tìm kiếm sản phẩm</label>
+				<input id="product-search" class="search-input" type="search" placeholder="Nhập tên sản phẩm..." autocomplete="off">
+			</div>
 			<div class="grid" id="product-grid">
 				<!-- Grid populated by JS -->
 			</div>
+			<p id="search-empty" class="search-empty" style="display:none;">Không tìm thấy sản phẩm phù hợp.</p>
 		</section>
 	</main>
 
@@ -42,20 +47,39 @@
 		// render product grid from shared data
 		(function(){
 			const grid = document.getElementById('product-grid');
+			const searchInput = document.getElementById('product-search');
+			const emptyState = document.getElementById('search-empty');
 			if(!grid || !window.products) return;
-			window.products.forEach(p=>{
-				const card = document.createElement('article');
-				card.className = 'card';
-				card.innerHTML = `
-					<a href="chi-tiet.html?id=${p.id}"><img src="${productUrl(p.imgFile)}" alt="${p.title}"></a>
-					<h3><a href="chi-tiet.html?id=${p.id}">${p.title}</a></h3>
-					<p class="price">${p.price}</p>
-					<button class="btn add-to-cart" data-id="${p.id}">Thêm vào giỏ</button>
-				`;
-				grid.appendChild(card);
-			});
-			// bind buttons after insertion
-			bindAddToCartButtons(document);
+
+			function renderProducts(list){
+				grid.innerHTML = '';
+				list.forEach(p=>{
+					const card = document.createElement('article');
+					card.className = 'card';
+					card.innerHTML = `
+						<a href="chi-tiet.html?id=${p.id}"><img src="${productUrl(p.imgFile)}" alt="${p.title}"></a>
+						<h3><a href="chi-tiet.html?id=${p.id}">${p.title}</a></h3>
+						<p class="price">${p.price}</p>
+						<button class="btn add-to-cart" data-id="${p.id}">Thêm vào giỏ</button>
+					`;
+					grid.appendChild(card);
+				});
+				bindAddToCartButtons(document);
+				if(emptyState) emptyState.style.display = list.length ? 'none' : 'block';
+			}
+
+			function filterProducts(){
+				const keyword = (searchInput && searchInput.value ? searchInput.value : '').trim().toLowerCase();
+				const filtered = window.products.filter(p =>
+					p.title.toLowerCase().includes(keyword) || p.desc.toLowerCase().includes(keyword)
+				);
+				renderProducts(filtered);
+			}
+
+			if(searchInput){
+				searchInput.addEventListener('input', filterProducts);
+			}
+			renderProducts(window.products);
 		})();
 	</script>
 </body>

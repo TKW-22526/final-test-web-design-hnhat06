@@ -27,6 +27,11 @@ body{
 .product-actions .btn{min-width:130px;text-align:center}
 .products{padding:36px 0}
 .products h2{margin:0 0 18px;color:#0f766e}
+.search-bar{display:flex;flex-direction:column;gap:8px;margin:0 0 18px;max-width:420px}
+.search-label{font-weight:600;color:#374151}
+.search-input{width:100%;padding:12px 14px;border:1px solid #d1d5db;border-radius:8px;font:inherit;background:#fff}
+.search-input:focus{outline:2px solid rgba(43,138,120,0.2);border-color:var(--accent)}
+.search-empty{margin:18px 0 0;color:var(--muted);font-weight:600}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .card{background:#fff;padding:12px;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,0.04);text-align:center}
 .card img{width:100%;height:160px;object-fit:cover;border-radius:6px}
@@ -39,6 +44,7 @@ body{
 }
 @media (max-width:560px){
 	.header-inner{flex-direction:column;gap:8px;align-items:flex-start}
+	.search-bar{max-width:none}
 	.grid{grid-template-columns:1fr}
 	.hero h1{font-size:1.5rem}
 }
